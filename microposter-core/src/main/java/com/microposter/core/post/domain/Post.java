@@ -1,14 +1,29 @@
 package com.microposter.core.post.domain;
 
 
+import javax.persistence.*;
 import java.util.Collections;
 import java.util.Set;
 
+@Entity
+@Table(name = "posts")
 public class Post {
+
+@Id
+@Column(name = "pid")
+@GeneratedValue
 private int id;
+
+@Column(name = "uid")
 private int uid; //Owner ID;
+
+@Column(name = "title")
 private String title;
+
+@Column(name = "description")
 private String desc;
+
+@Transient
 private Set<String> hashtags = Collections.emptySet();
 
 public int getId() {

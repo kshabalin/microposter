@@ -4,6 +4,7 @@ import com.microposter.core.user.domain.User;
 import com.microposter.core.user.manager.UserManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ import java.util.List;
 public class UsersController {
 private static final Log LOG = LogFactory.getLog(UsersController.class);
 
-@Value("#{userManager}")
+@Autowired
 private UserManager userManager;
 
 @RequestMapping(value = "/", method = RequestMethod.POST)

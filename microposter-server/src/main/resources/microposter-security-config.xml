@@ -14,7 +14,7 @@
     <http use-expressions="true" entry-point-ref="restAuthenticationEntryPoint">
         <intercept-url pattern="/api/**" access="isAuthenticated()" />
 
-        <sec:form-login authentication-success-handler-ref="successHandler" authentication-failure-handler-ref="failureHandler" />
+        <sec:form-login authentication-success-handler-ref="successHandler" authentication-failure-handler-ref="failureHandler" login-processing-url="/my_login"/>
 
         <logout />
     </http>

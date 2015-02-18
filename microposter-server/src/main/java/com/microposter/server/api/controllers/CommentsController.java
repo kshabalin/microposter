@@ -4,6 +4,7 @@ import com.microposter.core.comment.domain.Comment;
 import com.microposter.core.comment.manager.CommentManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ import java.util.List;
 public class CommentsController {
 private static final Log LOG = LogFactory.getLog(CommentsController.class);
 
-@Value("#{commentManager}")
+@Autowired
 private CommentManager commentManager;
 
 @RequestMapping(value = "/", method = RequestMethod.POST)

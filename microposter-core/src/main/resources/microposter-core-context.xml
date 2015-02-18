@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
 
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
                       http://www.springframework.org/schema/context
                       http://www.springframework.org/schema/context/spring-context-4.0.xsd
                       http://www.springframework.org/schema/util
-                      http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+                      http://www.springframework.org/schema/util/spring-util-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -18,20 +18,47 @@
         <property name="password" value=""/>
     </bean>
 
-    <bean id="postDao" class="com.microposter.core.post.dao.MySQLPostDao">
-        <property name="dataSource" ref="dataSource" />
+    <bean id="postDao" class="com.microposter.core.post.dao.HibernatePostDAO">
+        <!--<property name="dataSource" ref="dataSource" />-->
     </bean>
 
-    <bean id="userDao" class="com.microposter.core.user.dao.MySQLUserDao">
-        <property name="dataSource" ref="dataSource" />
+    <bean id="userDao" class="com.microposter.core.user.dao.HibernateUserDao">
+        <!--<property name="dataSource" ref="dataSource" />-->
     </bean>
 
-    <bean id="commentDao" class="com.microposter.core.comment.dao.MySQLCommentDao">
+    <bean id="commentDao" class="com.microposter.core.comment.dao.HibernateCommentDao">
+        <!--<property name="dataSource" ref="dataSource"/>-->
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <!-- Менеджер транзакций -->
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <!--<bean id="postManager" class="com.microposter.core.post.manager.PostManagerImpl"/>-->
+    <!--<bean id="userManager" class="com.microposter.core.user.manager.UserManagerImpl"/>-->
+    <!--<bean id="commentManager" class="com.microposter.core.comment.manager.CommentManagerImpl"/>-->
+    <context:component-scan base-package="com.microposter.core.post.manager"/>
+    <context:component-scan base-package="com.microposter.core.user.manager"/>
+    <context:component-scan base-package="com.microposter.core.comment.manager"/>
+
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation">
+            <value>classpath:hibernate.cfg.xml</value>
+        </property>
+        <property name="configurationClass">
+            <value>org.hibernate.cfg.AnnotationConfiguration</value>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
     </bean>
-
-    <bean id="postManager" class="com.microposter.core.post.manager.PostManagerImpl"/>
-    <bean id="userManager" class="com.microposter.core.user.manager.UserManagerImpl"/>
-    <bean id="commentManager" class="com.microposter.core.comment.manager.CommentManagerImpl"/>
 
 </beans>

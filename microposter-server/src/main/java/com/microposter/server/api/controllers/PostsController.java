@@ -18,7 +18,7 @@ public class PostsController {
 
 private static final Log LOG = LogFactory.getLog(PostsController.class);
 
-@Value("#{postManager}")
+@Autowired
 private PostManager postManager;
 
 @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")

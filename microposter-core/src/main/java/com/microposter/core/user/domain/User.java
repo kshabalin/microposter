@@ -3,19 +3,44 @@ package com.microposter.core.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
 import java.util.Collections;
 import java.util.Set;
 
+@Entity
+@Table(name = "users")
 public class User {
+
+@Id
+@Column(name = "uid")
+@GeneratedValue
 private int id;
+
+@Column(name = "email")
 private String email;
+
+@Column(name = "name")
 private String name;
+
+@Transient
 private String firstName;
+
+@Transient
 private String middleName;
+
+@Transient
 private String lastName;
+
+@Transient
 private String gender;
+
+@Transient
 private String birthday;
+
+@Transient
 private String photoId;
+
+@Column(name = "password")
 private String password;
 
 public int getId() {

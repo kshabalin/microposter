@@ -1,11 +1,26 @@
 package com.microposter.core.comment.domain;
 
+import javax.persistence.*;
 
+@Entity
+@Table(name = "comments")
 public class Comment {
+
+@Id
+@Column(name = "cid")
+@GeneratedValue
 private int id;
+
+@Column(name = "uid")
 private int uid; //Owner ID;
+
+@Column(name = "uid")
 private int pid;
+
+@Column(name = "title")
 private String title;
+
+@Column(name = "body")
 private String desc;
 
 public int getId() {
