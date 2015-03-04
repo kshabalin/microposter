@@ -1,4 +1,4 @@
-package com.microposter.server.api.controllers;
+package com.microposter.server.api.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

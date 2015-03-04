@@ -27,7 +27,8 @@ public void setDataSource(DataSource dataSource) {
   this.dataSource = dataSource;
 }
 
-public void createUser(User user) {
+@Override
+public void create(User user) {
   String query = CREATE_USER_QUERY;
   Connection conn = null;
 
@@ -53,7 +54,8 @@ public void createUser(User user) {
   }
 }
 
-public void deleteUser(int uid) {
+@Override
+public void delete(int uid) {
   String query = DELETE_USER_QUERY;
   Connection conn = null;
 
@@ -77,7 +79,8 @@ public void deleteUser(int uid) {
   }
 }
 
-public User getUserById(int uid) {
+@Override
+public User getById(int uid) {
   String query = GET_USER_BY_ID_QUERY;
   Connection conn = null;
 
@@ -107,7 +110,8 @@ public User getUserById(int uid) {
   }
 }
 
-public void updateUser(User user) {
+@Override
+public void update(User user) {
   String query = UPDATE_USER_QUERY;
   Connection conn = null;
 
@@ -134,7 +138,8 @@ public void updateUser(User user) {
   }
 }
 
-public List<User> getAllUsers() {
+@Override
+public List<User> getAll() {
   String query = ALL_USERS_QUERY;
   List<User> users = new ArrayList<User>();
   Connection conn = null;

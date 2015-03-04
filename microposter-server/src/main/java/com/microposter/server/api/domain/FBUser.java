@@ -1,53 +1,24 @@
-package com.microposter.core.user.domain;
+package com.microposter.server.api.domain;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-import java.util.Collections;
-import java.util.Set;
-
-@Entity
-@Table(name = "users")
-public class User {
-
-@Id
-@Column(name = "uid")
-@GeneratedValue
-private Integer id;
-
-@Column(name = "email")
+public class FBUser {
+private String id;
 private String email;
-
-@Column(name = "name")
+private String username;
 private String name;
-
-@Transient
 private String firstName;
-
-@Transient
 private String middleName;
-
-@Transient
 private String lastName;
-
-@Transient
 private String gender;
-
-@Transient
+private Integer timezone;
 private String birthday;
+private String uid; //User#id
+private String token;
 
-@Transient
-private String photoId;
-
-@Column(name = "password")
-private String password;
-
-public int getId() {
+public String getId() {
   return id;
 }
 
-public void setId(int id) {
+public void setId(String id) {
   this.id = id;
 }
 
@@ -59,6 +30,14 @@ public void setEmail(String email) {
   this.email = email;
 }
 
+public String getUsername() {
+  return username;
+}
+
+public void setUsername(String username) {
+  this.username = username;
+}
+
 public String getName() {
   return name;
 }
@@ -67,7 +46,6 @@ public void setName(String name) {
   this.name = name;
 }
 
-@JsonIgnore
 public String getFirstName() {
   return firstName;
 }
@@ -76,7 +54,6 @@ public void setFirstName(String firstName) {
   this.firstName = firstName;
 }
 
-@JsonIgnore
 public String getMiddleName() {
   return middleName;
 }
@@ -85,7 +62,6 @@ public void setMiddleName(String middleName) {
   this.middleName = middleName;
 }
 
-@JsonIgnore
 public String getLastName() {
   return lastName;
 }
@@ -94,7 +70,6 @@ public void setLastName(String lastName) {
   this.lastName = lastName;
 }
 
-@JsonIgnore
 public String getGender() {
   return gender;
 }
@@ -103,7 +78,14 @@ public void setGender(String gender) {
   this.gender = gender;
 }
 
-@JsonIgnore
+public Integer getTimezone() {
+  return timezone;
+}
+
+public void setTimezone(Integer timezone) {
+  this.timezone = timezone;
+}
+
 public String getBirthday() {
   return birthday;
 }
@@ -112,20 +94,19 @@ public void setBirthday(String birthday) {
   this.birthday = birthday;
 }
 
-@JsonIgnore
-public String getPhotoId() {
-  return photoId;
+public String getUid() {
+  return uid;
 }
 
-public void setPhotoId(String photoId) {
-  this.photoId = photoId;
+public void setUid(String uid) {
+  this.uid = uid;
 }
 
-public String getPassword() {
-  return password;
+public String getToken() {
+  return token;
 }
 
-public void setPassword(String password) {
-  this.password = password;
+public void setToken(String token) {
+  this.token = token;
 }
 }

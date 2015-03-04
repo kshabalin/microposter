@@ -2,6 +2,7 @@ package com.microposter.server.api.controllers;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import com.microposter.server.api.domain.Greeting;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;

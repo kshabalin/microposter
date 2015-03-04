@@ -5,9 +5,9 @@ import com.microposter.core.user.domain.User;
 import java.util.List;
 
 public interface UserDao {
-void createUser(User user);
-void deleteUser(int uid);
-void updateUser(User user);
-User getUserById(int uid);
-List<User> getAllUsers();
+void create(User user);
+void delete(int uid);
+void update(User user);
+User getById(int uid);
+List<User> getAll();
 }

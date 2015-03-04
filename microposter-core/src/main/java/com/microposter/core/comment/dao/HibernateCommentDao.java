@@ -2,6 +2,7 @@ package com.microposter.core.comment.dao;
 
 
 import com.microposter.core.comment.domain.Comment;
+import org.hibernate.classic.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,26 +15,38 @@ private static String ALL_COMMENTS_BY_USER_QUERY = "SELECT * FROM comments WHERE
 @Autowired
 private SessionFactory sessionFactory;
 
-public void createComment(Comment comment) {
+@SuppressWarnings("unchecked")
+@Override
+public void create(Comment comment) {
   sessionFactory.getCurrentSession().save(comment);
 }
 
-public void deleteComment(int cid) {
-  Comment comment = (Comment) sessionFactory.getCurrentSession().load(Comment.class, cid);
+@SuppressWarnings("unchecked")
+@Override
+public void delete(int cid) {
+  Comment comment = (Comment) getSession().load(Comment.class, cid);
   if (comment != null) {
     sessionFactory.getCurrentSession().delete(comment);
   }
 }
 
-public List<Comment> getAllCommentsByUser(int uid) {
+@SuppressWarnings("unchecked")
+@Override
+public List<Comment> getAllByUser(int uid) {
   String getCommentsByUserQuery = String.format(ALL_COMMENTS_BY_USER_QUERY, uid);
-  List<Comment> comments = sessionFactory.getCurrentSession().createSQLQuery(getCommentsByUserQuery).addEntity(Comment.class).list();
+  List<Comment> comments = getSession().createSQLQuery(getCommentsByUserQuery).addEntity(Comment.class).list();
   return comments;
 }
 
-public List<Comment> getAllCommentsByPost(int pid) {
+@SuppressWarnings("unchecked")
+@Override
+public List<Comment> getAllByPost(int pid) {
   String getCommentsByPostQuery = String.format(ALL_COMMENTS_BY_POST_QUERY, pid);
-  List<Comment> comments = sessionFactory.getCurrentSession().createSQLQuery(getCommentsByPostQuery).addEntity(Comment.class).list();
+  List<Comment> comments = getSession().createSQLQuery(getCommentsByPostQuery).addEntity(Comment.class).list();
   return comments;
+}
+
+private Session getSession() {
+  return sessionFactory.getCurrentSession();
 }
 }

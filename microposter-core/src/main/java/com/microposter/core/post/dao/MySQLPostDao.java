@@ -28,9 +28,11 @@ public void setDataSource(DataSource dataSource) {
   this.dataSource = dataSource;
 }
 
-public void createPost(Post post) {
+@Override
+public int create(Post post) {
   String query = CREATE_POST_QUERY;
   Connection conn = null;
+  int pid = -1;
 
   try {
     conn = dataSource.getConnection();
@@ -38,7 +40,7 @@ public void createPost(Post post) {
     ps.setInt(1, post.getUid());
     ps.setString(2, post.getTitle());
     ps.setString(3, post.getDesc());
-    ps.executeUpdate();
+    pid = ps.executeUpdate();
     ps.close();
 
   } catch (SQLException e) {
@@ -52,9 +54,11 @@ public void createPost(Post post) {
       }
     }
   }
+  return pid;
 }
 
-public void deletePost(int pid) {
+@Override
+public void delete(int pid) {
   String query = DELETE_POST_QUERY;
   Connection conn = null;
 
@@ -78,7 +82,8 @@ public void deletePost(int pid) {
   }
 }
 
-public List<Post> getAllPosts() {
+@Override
+public List<Post> getAll() {
   String query = ALL_POSTS_QUERY;
   List<Post> posts = new ArrayList<Post>();
   Connection conn = null;
@@ -109,7 +114,8 @@ public List<Post> getAllPosts() {
   }
 }
 
-public List<Post> getPostsByUser(int uid) {
+@Override
+public List<Post> getByUser(int uid) {
   String query = ALL_POST_BY_USER_QUERY;
   List<Post> posts = new ArrayList<Post>();
   Connection conn = null;
@@ -141,7 +147,8 @@ public List<Post> getPostsByUser(int uid) {
   }
 }
 
-public Post getPost(int pid) {
+@Override
+public Post getById(int pid) {
   String query = GET_POST_QUERY;
   Connection conn = null;
 

@@ -27,7 +27,8 @@ public void setDataSource(DataSource dataSource) {
   this.dataSource = dataSource;
 }
 
-public void createComment(Comment comment) {
+@Override
+public void create(Comment comment) {
   String query = CREATE_COMMENT_QUERY;
   Connection conn = null;
 
@@ -54,7 +55,8 @@ public void createComment(Comment comment) {
   }
 }
 
-public void deleteComment(int cid) {
+@Override
+public void delete(int cid) {
   String query = DELETE_COMMENT_QUERY;
   Connection conn = null;
 
@@ -78,7 +80,8 @@ public void deleteComment(int cid) {
   }
 }
 
-public List<Comment> getAllCommentsByUser(int uid) {
+@Override
+public List<Comment> getAllByUser(int uid) {
   String query = ALL_COMMENTS_BY_USER_QUERY;
   List<Comment> comments = new ArrayList<Comment>();
   Connection conn = null;
@@ -112,7 +115,8 @@ public List<Comment> getAllCommentsByUser(int uid) {
   }
 }
 
-public List<Comment> getAllCommentsByPost(int pid) {
+@Override
+public List<Comment> getAllByPost(int pid) {
   String query = ALL_COMMENTS_BY_POST_QUERY;
   List<Comment> comments = new ArrayList<Comment>();
   Connection conn = null;

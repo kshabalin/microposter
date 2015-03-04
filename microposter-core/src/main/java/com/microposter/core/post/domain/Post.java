@@ -12,10 +12,10 @@ public class Post {
 @Id
 @Column(name = "pid")
 @GeneratedValue
-private int id;
+private Integer id;
 
 @Column(name = "uid")
-private int uid; //Owner ID;
+private Integer uid; //Owner ID;
 
 @Column(name = "title")
 private String title;

@@ -9,13 +9,13 @@ public class Comment {
 @Id
 @Column(name = "cid")
 @GeneratedValue
-private int id;
+private Integer id;
 
 @Column(name = "uid")
-private int uid; //Owner ID;
+private Integer uid; //Owner ID;
 
 @Column(name = "uid")
-private int pid;
+private Integer pid;
 
 @Column(name = "title")
 private String title;

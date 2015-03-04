@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,23 +22,25 @@ private static final Log LOG = LogFactory.getLog(PostsController.class);
 @Autowired
 private PostManager postManager;
 
-@RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
+@Transactional
+@RequestMapping(method = RequestMethod.POST)
 @ResponseBody
 public Post create(@RequestBody Post post) {
   try {
-    postManager.createPost(post);
-    return post;
+    int id = postManager.create(post);
+    return postManager.getById(id);
   } catch (Exception e) {
     LOG.error("Failed to create the post, %s", e);
     throw new RuntimeException(e);
   }
 }
 
+@Transactional(readOnly = true)
 @RequestMapping(value = "/{uid}", method = RequestMethod.GET)
 @ResponseBody
-public List<Post> getAllPostsByUser(@PathVariable("uid") String uid) {
+public List<Post> getAllByUser(@PathVariable("uid") String uid) {
   try {
-    List<Post> posts = postManager.getPostsByUser(Integer.parseInt(uid));
+    List<Post> posts = postManager.getByUser(Integer.parseInt(uid));
     return posts;
   } catch (Exception e) {
     LOG.error("Failed to get all posts by user, %s", e);
@@ -45,11 +48,12 @@ public List<Post> getAllPostsByUser(@PathVariable("uid") String uid) {
   }
 }
 
-@RequestMapping(value = "/", method = RequestMethod.GET)
+@Transactional(readOnly = true)
+@RequestMapping(method = RequestMethod.GET)
 @ResponseBody
-public List<Post> getAllPosts() {
+public List<Post> getAll() {
   try {
-    List<Post> posts = postManager.getAllPosts();
+    List<Post> posts = postManager.getAll();
     return posts;
   } catch (Exception e) {
     LOG.error("Failed to get all posts, %s", e);
@@ -57,11 +61,12 @@ public List<Post> getAllPosts() {
   }
 }
 
+@Transactional(readOnly = true)
 @RequestMapping(value = "/{pid}", method = RequestMethod.GET)
 @ResponseBody
 public Post getPost(@PathVariable("pid") String pid) {
   try {
-    Post post = postManager.getPost(Integer.parseInt(pid));
+    Post post = postManager.getById(Integer.parseInt(pid));
     return post;
   } catch (Exception e) {
     LOG.error("Failed to get the post, %s", e);
@@ -69,10 +74,11 @@ public Post getPost(@PathVariable("pid") String pid) {
   }
 }
 
+@Transactional
 @RequestMapping(value = "/{pid}", method = RequestMethod.DELETE)
 public void delete(@PathVariable("pid") String pid) {
   try {
-    postManager.deletePost(Integer.parseInt(pid));
+    postManager.delete(Integer.parseInt(pid));
   } catch (Exception e) {
     LOG.error("Failed to delete the post, %s", e);
     throw new RuntimeException(e);

@@ -2,6 +2,7 @@ package com.microposter.core.post.dao;
 
 
 import com.microposter.core.post.domain.Post;
+import org.hibernate.classic.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,30 +16,44 @@ private static String ALL_POST_BY_USER_QUERY = "SELECT * FROM CUSTOMER WHERE uid
 @Autowired
 private SessionFactory sessionFactory;
 
-public void createPost(Post post) {
-  sessionFactory.getCurrentSession().save(post);
+@SuppressWarnings("unchecked")
+@Override
+public int create(Post post) {
+  return Integer.parseInt(sessionFactory.getCurrentSession().save(post).toString());
 }
 
-public void deletePost(int id) {
+@SuppressWarnings("unchecked")
+@Override
+public void delete(int id) {
   Post post = (Post) sessionFactory.getCurrentSession().load(Post.class, id);
   if (post != null) {
-    sessionFactory.getCurrentSession().delete(post);
+    getSession().delete(post);
   }
 }
 
-public List<Post> getAllPosts() {
-  List<Post> posts = sessionFactory.getCurrentSession().createCriteria(Post.class).list();
+@SuppressWarnings("unchecked")
+@Override
+public List<Post> getAll() {
+  List<Post> posts = getSession().createCriteria(Post.class).list();
   return posts;
 }
 
-public List<Post> getPostsByUser(int uid) {
+@SuppressWarnings("unchecked")
+@Override
+public List<Post> getByUser(int uid) {
   String getPostByUserQuery = String.format(ALL_POST_BY_USER_QUERY, uid);
-  List<Post> posts = sessionFactory.getCurrentSession().createSQLQuery(getPostByUserQuery).addEntity(Post.class).list();
+  List<Post> posts = getSession().createSQLQuery(getPostByUserQuery).addEntity(Post.class).list();
   return posts;
 }
 
-public Post getPost(int pid) {
-  Post post = (Post) sessionFactory.getCurrentSession().load(Post.class, pid);
+@SuppressWarnings("unchecked")
+@Override
+public Post getById(int pid) {
+  Post post = (Post) getSession().load(Post.class, pid);
   return post;
+}
+
+private Session getSession() {
+  return sessionFactory.getCurrentSession();
 }
 }
